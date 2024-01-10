@@ -4,6 +4,8 @@ import {
   withStreamlitConnection,
 } from "streamlit-component-lib"
 import React, { ReactNode } from "react"
+import PortkeyUI from "./PortkeyUI"
+import Layout from "./Layout"
 
 interface State {
   numClicks: number
@@ -40,44 +42,12 @@ class MyComponent extends StreamlitComponentBase<State> {
       style.outline = borderStyling
     }
 
-    // Show a button and some text.
-    // When the button is clicked, we'll increment our "numClicks" state
-    // variable, and send its new value back to Streamlit, where it'll
-    // be available to the Python program.
+    // Portkey integration
     return (
-      <span>
-        Hello, {name}! &nbsp;
-        <button
-          style={style}
-          onClick={this.onClicked}
-          disabled={this.props.disabled}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-        >
-          Click Me!
-        </button>
-      </span>
+      <Layout>
+        <PortkeyUI />
+      </Layout>
     )
-  }
-
-  /** Click handler for our "Click Me!" button. */
-  private onClicked = (): void => {
-    // Increment state.numClicks, and pass the new value back to
-    // Streamlit via `Streamlit.setComponentValue`.
-    this.setState(
-      prevState => ({ numClicks: prevState.numClicks + 1 }),
-      () => Streamlit.setComponentValue(this.state.numClicks)
-    )
-  }
-
-  /** Focus handler for our "Click Me!" button. */
-  private _onFocus = (): void => {
-    this.setState({ isFocused: true })
-  }
-
-  /** Blur handler for our "Click Me!" button. */
-  private _onBlur = (): void => {
-    this.setState({ isFocused: false })
   }
 }
 
